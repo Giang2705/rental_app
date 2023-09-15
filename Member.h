@@ -21,6 +21,7 @@ class Member {
         void showInfo();
         void rating(Member owner);
         void displayListRating();
+        vector<Rating> getRatingList();
 };
 
 #endif

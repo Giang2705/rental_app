@@ -31,3 +31,7 @@ void Member::displayListRating(){
         this->ratingList[i].displayDetail();
     }
 }
+
+vector<Rating> Member::getRatingList(){
+    return this->ratingList;
+}

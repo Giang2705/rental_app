@@ -29,5 +29,11 @@ int main(){
 
     mem1.displayListRating();
 
+    for (int i = 0; i < mem1.getRatingList().size(); i++){
+        datalist.addRating(mem1.getRatingList()[i]);
+    }
+
+    datalist.showRatingList();
+
     return 0;
 }

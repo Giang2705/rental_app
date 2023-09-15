@@ -21,7 +21,7 @@ void datalist::showMemberList(){
     }
 }
 
-void datalist::showMemberList(){
+void datalist::showRatingList(){
     for (int i = 0; i < this->ratingList.size(); i++){
         this->ratingList[i].displayDetail();
     }
