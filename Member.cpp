@@ -4,7 +4,9 @@
 #include "Rating.h"
 using namespace std;
 
-Member::Member(int id, string name, vector<Rating> ratingList) {this->id = id; this->name = name; this->ratingList = ratingList;}
+Member::Member(int id, string name, vector<Rating> ratingList) {
+    this->id = id; this->name = name; this->ratingList = ratingList;
+}
 
 void Member::showInfo(){
     cout<<"Member Id: "<< id <<"\n";

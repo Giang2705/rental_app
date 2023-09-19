@@ -5,7 +5,9 @@
 #include "Rating.h"
 using namespace std;
 
-datalist::datalist(vector<Member> memberList, vector<Rating> ratingList){this->memberList = memberList; this->ratingList = ratingList;}
+datalist::datalist(vector<Member> memberList, vector<Rating> ratingList){
+    this->memberList = memberList; this->ratingList = ratingList;
+}
 
 void datalist::addMember(Member member){
     this->memberList.push_back(member);
