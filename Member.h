@@ -16,13 +16,14 @@ class Member {
         string name, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate;
     
     public:
-        Member(int id, string name, vector<Rating> ratingList, string username, string password);
+        Member(int id, string name, string username, string password);
         Member();
 
         void showInfo();
         void rating(Member owner);
         void displayListRating();
         vector<Rating> getRatingList();
+        vector<Member> readDatabase();
         void registerCustomer();
         Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput);
 

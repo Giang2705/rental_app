@@ -7,8 +7,6 @@ using namespace std;
 #include "functions.h"
 
 int main(){
-    Member mem1(generateId(), "member 1", {}, "username1", "123455");
-    Member mem2(generateId(), "member 2", {}, "username2", "4657687");
 
     int choice;
     string username, password;

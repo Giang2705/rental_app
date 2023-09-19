@@ -5,7 +5,7 @@
 #include "Rating.h"
 using namespace std;
 
-Member::Member(int id, string name, vector<Rating> ratingList, string username, string password) {this->id = id; this->name = name; this->ratingList = ratingList; this->username = username; this->password = password;}
+Member::Member(int id, string name, string username, string password) {this->id = id; this->name = name; this->username = username; this->password = password;}
 Member::Member(){};
 
 void Member::showInfo(){
@@ -48,33 +48,53 @@ bool Member::checkPassword(const std::string& passwordInput) const {
 }
 
 
-vector<Member> customerDatabase;    // This is a test database
-
 // Function to register a new customer
 void Member::registerCustomer() {
-    
+    string fullname, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate;
     int id = generateId();
+    int creditPoint = 20;
 
-    string name;
-    cout << "Enter your name: ";
+    cout << "Enter your full name: ";
     cin.ignore();
-    getline(cin, name);
+    getline(cin, fullname);
     
-    string username;
+    cout << "Enter your phone number: ";
+    cin.ignore();
+    getline(cin, phoneNumber);
+
+    cout << "Enter your ID type (passport / ID): ";
+    cin.ignore();
+    getline(cin, idType);
+
+    cout << "Enter your ID Number (passport / ID): ";
+    cin.ignore();
+    getline(cin, idNumber);
+
+    cout << "Enter your driver license: ";
+    cin.ignore();
+    getline(cin, driverLicense);
+
+    cout << "Enter the expired date of your driver license: ";
+    cin.ignore();
+    getline(cin, expiredDate);
+
     cout << "Enter your username: ";
-    cin >> username;
+    cin.ignore();
+    getline(cin, username);
+// There is a need to check for the same account
 
     string password;
     cout << "Enter your password: ";
-    cin >> password;
+    cin.ignore();
+    getline(cin, password);
 
     ifstream file("users.txt");
     if (file.is_open()){
         ofstream file("users.txt", ios::app);
-        file << "\n" << name << "," << username << ","<< password;
+        file << "\n" << id << fullname << "," << username << ","<< password << "," << creditPoint << ","<< phoneNumber << ","<< idType << ","<< idNumber << ","<< driverLicense << ","<< expiredDate;
     } else {
         ofstream file("users.txt");
-        file << name << "," << username << ","<< password;
+        file << id << fullname << "," << username << ","<< password << "," << creditPoint << ","<< phoneNumber << ","<< idType << ","<< idNumber << ","<< driverLicense << ","<< expiredDate;
     }
     file.close();
 
@@ -82,11 +102,27 @@ void Member::registerCustomer() {
     // Member newCustomer(id, name, {}, username, password);
     // customerDatabase.push_back(newCustomer);
 
-    cout << "Registration successful. Your ID is: " << id << endl;
+    cout << "Registration successful!!!! " << "\n" << fullname << "\nYour ID : " << id <<
+    "\nYour credit point: "<< creditPoint << endl;
 }
 
-Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput) {
-    for (Member& customer : customerDatabase) {
+
+vector<Member> readDatabase(){
+    ifstream inputFile("users.txt");
+    vector<Member> members; 
+   
+    int id;
+    string name, username, password;
+    while (inputFile >> id >> name >> username >> password) {
+        members.emplace_back(id, name, username, password);
+    }
+
+    inputFile.close();
+    return members;
+}
+
+Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput, vector<Member>& members) {
+    for (Member& customer : members) {
         if (customer.getUsername() == usernameInput && customer.checkPassword(passwordInput)) {
             cout << "Login successful. Welcome, " << customer.getUsername() << "!" << endl;
             return &customer;
