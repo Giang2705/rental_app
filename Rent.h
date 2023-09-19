@@ -1,3 +1,6 @@
+#ifndef _RENT_H_
+#define _RENT_H_
+
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -23,9 +26,15 @@ class Rent{
 
 void Rent :: rent_time(){
     time_t now = time(0); // get current dat/time with respect to system  
-    char* dt = ctime(&now); // convert it into string  
-    cout << "The date and time is: " << dt << endl; // print local date and time  
+    char* rent_date = ctime(&now); // convert it into string  
+    cout << "Rent date and time is: " << rent_date << endl; // print local date and time  
 }
+
+void Rent :: return_time(){
+    time_t return_date = time(0) + day_rented;
+    char* rd = ctime(&return_date);
+    cout << "Return date and time is: " << rd << endl;
+} 
 
 int Rent :: total_amount(){
     int fee = 0;
@@ -38,3 +47,5 @@ int Rent :: total_amount(){
 int Rent :: billinvoice(){
     rent_time();
 }
+
+#endif
