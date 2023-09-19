@@ -11,11 +11,10 @@ using namespace std;
 
 class Member {
     private:
-        int id;
-        string name;
+        int id, creditPoint, ratingScore;
         vector<Rating> ratingList;
-        string username;
-        string password;
+        string name, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate;
+    
     public:
         Member(int id, string name, vector<Rating> ratingList, string username, string password);
         Member();

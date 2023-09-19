@@ -72,6 +72,9 @@ void Member::registerCustomer() {
     if (file.is_open()){
         ofstream file("users.txt", ios::app);
         file << "\n" << name << "," << username << ","<< password;
+    } else {
+        ofstream file("users.txt");
+        file << name << "," << username << ","<< password;
     }
     file.close();
 
