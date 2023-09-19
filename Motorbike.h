@@ -10,14 +10,14 @@ class Motorbike{
     private:
     int bikeID;
     string brand;
-    Member userID;
+    Member member;
     string city;
     int requiredScore;
    bool isRented = 0;
    vector <Motorbike *> motorlist;
    public:
-   Motorbike(int bikeID = 0, Member userID = 0, string city = "", int requiredScore = 0, bool isRented = false, vector <Motorbike*> motorlist = {}) 
-            : bikeID(bikeID), userID(userID), city(city), requiredScore(requiredScore), isRented(isRented), motorlist(motorlist){} 
+   Motorbike(int bikeID = 0, Member member = Member(), string city = "", int requiredScore = 0, bool isRented = false, vector <Motorbike*> motorlist = {}) 
+            : bikeID(bikeID), member(member), city(city), requiredScore(requiredScore), isRented(isRented), motorlist(motorlist){} 
     
     int findbike(int ID){
         for(int i = 0; i < motorlist.size(); i++){

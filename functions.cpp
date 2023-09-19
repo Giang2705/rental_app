@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string.h>
 #include <vector>
 #include <algorithm>
 #include <random>

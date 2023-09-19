@@ -1,10 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "Member.h"
 #include "Rating.h"
 using namespace std;
 
 Member::Member(int id, string name, vector<Rating> ratingList, string username, string password) {this->id = id; this->name = name; this->ratingList = ratingList; this->username = username; this->password = password;}
+Member::Member(){};
 
 void Member::showInfo(){
     cout<<"Member Id: "<< id <<"\n";
@@ -42,17 +44,17 @@ string Member::getUsername() const {
 
 // Check if provided password matches the stored password
 bool Member::checkPassword(const std::string& passwordInput) const {
-    return passwordInput == password;
+    return passwordInput == this->password;
 }
 
 
 vector<Member> customerDatabase;    // This is a test database
 
 // Function to register a new customer
-void registerCustomer() {
+void Member::registerCustomer() {
     
     int id = generateId();
-    
+
     string name;
     cout << "Enter your name: ";
     cin.ignore();
@@ -60,17 +62,22 @@ void registerCustomer() {
     
     string username;
     cout << "Enter your username: ";
-    cin.ignore();
-    getline(cin, username);
+    cin >> username;
 
     string password;
     cout << "Enter your password: ";
-    cin.ignore();
-    getline(cin, password);
+    cin >> password;
 
-    // Create a new Member object and add it to the customer database
-    Member newCustomer(id, name, {}, username, password);
-    customerDatabase.push_back(newCustomer);
+    ifstream file("users.txt");
+    if (file.is_open()){
+        ofstream file("users.txt", ios::app);
+        file << "\n" << name << "," << username << ","<< password;
+    }
+    file.close();
+
+    // // Create a new Member object and add it to the customer database
+    // Member newCustomer(id, name, {}, username, password);
+    // customerDatabase.push_back(newCustomer);
 
     cout << "Registration successful. Your ID is: " << id << endl;
 }
@@ -80,6 +87,7 @@ Member* loginCustomer(const std::string& usernameInput, const std::string& passw
         if (customer.getUsername() == usernameInput && customer.checkPassword(passwordInput)) {
             cout << "Login successful. Welcome, " << customer.getUsername() << "!" << endl;
             return &customer;
+            break;
         }
     }
     cout << "Login failed. Member ID not found." << endl;
