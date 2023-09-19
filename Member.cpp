@@ -83,7 +83,6 @@ void Member::registerCustomer() {
     getline(cin, username);
 // There is a need to check for the same account
 
-    string password;
     cout << "Enter your password: ";
     cin.ignore();
     getline(cin, password);
