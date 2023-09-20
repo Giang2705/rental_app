@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cstdlib>
 #include "Member.h"
 #include "Motorbike.h"
 
@@ -14,7 +15,7 @@ private:
     vector<Motorbike *> motorlist;
 
 public:
-    Request(int ID = 0, vector<Member *> renter = {}, vector<Motorbike *> bike = {})
+    Request(int ID = (rand() % 10), vector<Member *> renter = {}, vector<Motorbike *> bike = {})
     {
         this->requestID = ID;
         this->renter = renter;
@@ -24,7 +25,7 @@ public:
     string renter_info(Member &renter, int bikeID)
     {
 
-        return "Renter: " + to_string(renter.id) + "\nRating: ";
+        return "Request ID: " + to_string(requestID) + "Renter: " + to_string(renter.id) + "\nRating: ";
         for (int i = 0; i < renter.ratingList.size(); i++)
         {
             renter.ratingList[i].displayDetail();
@@ -93,10 +94,30 @@ public:
 
         string ans;
         int userID;
+        int bikeID;
+        fstream myfile;
         while (ans[0] != 'Q')
         {
-            cout << "Enter the userID you want to approve: ";
+            cout << "Enter the bikeID you want to approve: ";
+            cin >> bikeID;
+            cout << "Enter the bikeID you want to approve: ";
             cin >> userID;
+
+            for (int i = 0; i < motorlist.size(); i++)
+        {
+            if (motorlist[i]->get_bikeID() == bikeID)
+            {
+                motorlist[i]->set_isRented(true);
+                myfile.open(filename, ios::out);
+                
+            }
+
+            else
+            {
+                cout << "Unvalid input of bikeID!";
+            }
+        }
+
         }
     }
 };
