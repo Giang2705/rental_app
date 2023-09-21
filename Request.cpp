@@ -22,14 +22,17 @@ public:
         this->motorlist = bike;
     }
 
-    string renter_info(Member &renter, int bikeID)
+    string renter_info(Member &renter, Motorbike bike)
     {
+        string reString = "";
 
-        return "Request ID: " + to_string(requestID) + "Renter: " + to_string(renter.id) + "\nRating: ";
+        reString = "Request ID: " + to_string(requestID) + "Bike ID: "+ to_string(bike.get_bikeID()) + "Renter: " + to_string(renter.id) + "\nRating: ";
         for (int i = 0; i < renter.ratingList.size(); i++)
         {
-            renter.ratingList[i].displayDetail();
+            reString = reString + renter.ratingList[i].displayDetail() ;
         }
+
+        return reString;
     }
 
     void save_request(Member &renter, int bikeID, string renter_info)
