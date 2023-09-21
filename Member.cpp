@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include "Member.h"
 #include "Rating.h"
@@ -42,46 +43,58 @@ string Member::getUsername() const {
     return username;
 }
 
-// Check if provided password matches the stored password
-bool Member::checkPassword(const std::string& passwordInput) const {
-    return passwordInput == this->password;
+string Member::getPassword() {
+    return password;
 }
-
 
 // Function to register a new customer
 void Member::registerCustomer() {
-    string fullname, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate;
+    vector<Member> members = Member::readDatabase();
     int id = generateId();
     int creditPoint = 20;
 
+    string fullname;
     cout << "Enter your full name: ";
     cin.ignore();
     getline(cin, fullname);
     
+    string phoneNumber;
     cout << "Enter your phone number: ";
     cin.ignore();
     getline(cin, phoneNumber);
 
+    string idType;
     cout << "Enter your ID type (passport / ID): ";
     cin.ignore();
     getline(cin, idType);
 
+    string idNumber;
     cout << "Enter your ID Number (passport / ID): ";
     cin.ignore();
     getline(cin, idNumber);
 
+    string driverLicense;
     cout << "Enter your driver license: ";
     cin.ignore();
     getline(cin, driverLicense);
 
+    string expiredDate;
     cout << "Enter the expired date of your driver license: ";
     cin.ignore();
     getline(cin, expiredDate);
 
+    string username;
     cout << "Enter your username: ";
     cin.ignore();
     getline(cin, username);
-// There is a need to check for the same account
+    // Checking existing account
+    for (Member& member : members){
+        while (member.getUsername() == username)
+        {
+            cout << "The username has existed ,enter another username: ";
+            getline(cin, username);
+        }
+    }
 
     cout << "Enter your password: ";
     cin.ignore();
@@ -106,28 +119,55 @@ void Member::registerCustomer() {
 }
 
 
-vector<Member> readDatabase(){
+vector<Member> Member::readDatabase(){
     ifstream inputFile("users.txt");
     vector<Member> members; 
-   
-    int id;
-    string name, username, password;
-    while (inputFile >> id >> name >> username >> password) {
-        members.emplace_back(id, name, username, password);
+
+    // Create a vector to store the data from the file
+    vector<vector<string>> data;
+
+    // Read the data from the file line by line
+    string line;
+    while (getline(inputFile, line)) {
+        // Split the line into columns
+        vector<string> columns;
+        istringstream ss(line);
+        string column;
+        while (getline(ss, column, ',')) {
+            columns.push_back(column);
+        }
+
+        // Add the columns to the data vector
+        data.push_back(columns);
     }
 
+    // Close the file
     inputFile.close();
+
+    // Iterate over the data vector and create a Member object for each row
+    for (vector<string>& row : data) {
+        // Get the id, name, username, and password from the row
+        int id = std::stoi(row[0]);
+        string name = row[1];
+        string username = row[2];
+        string password = row[3];
+
+        // Create a new Member object and add it to the members vector
+        Member member(id, name, username, password);
+        members.push_back(member);
+    }
+
     return members;
 }
 
-Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput, vector<Member>& members) {
-    for (Member& customer : members) {
-        if (customer.getUsername() == usernameInput && customer.checkPassword(passwordInput)) {
-            cout << "Login successful. Welcome, " << customer.getUsername() << "!" << endl;
-            return &customer;
-            break;
+Member *Member::loginCustomer(const string& username, const string& password)
+{
+    vector<Member> members = Member::readDatabase();
+
+    for (Member& member : members) {
+        if (member.getUsername() == username && member.getPassword() == password) {
+            return &member;
         }
     }
-    cout << "Login failed. Member ID not found." << endl;
     return nullptr;
 }

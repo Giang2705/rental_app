@@ -29,11 +29,13 @@ int main(){
             cout << "Enter your password: ";
             cin >> password;
             
-            // loggedInCustomer = loginCustomer(username, password);
-            // if (loggedInCustomer != nullptr) {
-            //     cout << "Logged in as: " << loggedInCustomer->getUsername() << endl;
-                
-            //     // Displaying Motobikes 
+            Member member;
+            Member* hasLogin = member.loginCustomer(username, password);
+            if (hasLogin == nullptr){
+                cout << "Login failed." << endl;
+            }else{
+                cout << "Login as: " << username << endl;
+                 //     // Displaying Motobikes 
 
             //     int choose;
             //     do {
@@ -49,6 +51,7 @@ int main(){
             //     mem1.displayListRating();
             
             // }
+            }
         } else if (choice == 3) {
             break;
         } else {

@@ -23,12 +23,12 @@ class Member {
         void rating(Member owner);
         void displayListRating();
         vector<Rating> getRatingList();
-        vector<Member> readDatabase();
+        static vector<Member> readDatabase();
         void registerCustomer();
-        Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput);
+        string getUsername();
+        string getPassword();
+        static Member* loginCustomer(const string& username, const string& password);
 
-        string getUsername() const;
-        bool checkPassword(const std::string& passwordInput) const;
 };
 
 #endif
