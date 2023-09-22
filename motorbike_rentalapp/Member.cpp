@@ -8,6 +8,7 @@
 #include "functions.h"
 using namespace std;
 
+//Parameterized Constructor
 Member::Member(int id, string name, string username, string password, string phoneNumber, string idType, string idNumber, string driverLicense, string expiredDate, double ratingScore, double creditPoint) {
     this->id = id; 
     this->name = name; 
@@ -21,14 +22,14 @@ Member::Member(int id, string name, string username, string password, string pho
     this->ratingScore = ratingScore;
     this->creditPoint = creditPoint;
 };
-Member::Member(){};
+Member::Member(){}; //Default Constructor with no parameter
 
-void Member::showInfo(){
+void Member::showInfo(){ //function to show the information of member
     cout<<"Member Id: "<< id <<"\n";
     cout<<"Member's name: "<<name<<"\n\n"; 
 }
 
-void Member::ratingRenter(Member renter){
+void Member::ratingRenter(Member renter){ //function to rate renter
     int score;
     string cmt;
     
@@ -39,7 +40,7 @@ void Member::ratingRenter(Member renter){
     getline(cin, cmt);
 
     Rating newRating(1, this->id, renter.id, score, cmt);
-    renter.userRatingList.push_back(newRating);
+    renter.userRatingList.push_back(newRating); //push back the comment to user rating list
 
     ifstream file("rating.txt");
     if (file.is_open()){
@@ -55,7 +56,7 @@ void Member::ratingRenter(Member renter){
     file.close();
 }
 
-void Member::setScore(){
+void Member::setScore(){ //set the average rating score
     double total = 0;
 
     for (int i = 0; i < this->userRatingList.size(); i++){
@@ -152,7 +153,7 @@ void Member::registerCustomer() {
     cout << "-----------------------------------------------------\n";
 }
 
-Member *Member::loginCustomer(const string& username, const string& password)
+Member *Member::loginCustomer(const string& username, const string& password) //login
 {
     vector<Member> members = memberList();
 
@@ -164,7 +165,7 @@ Member *Member::loginCustomer(const string& username, const string& password)
     return nullptr;
 }
 
-void Member::showSuitableBikes(){
+void Member::showSuitableBikes(){ //show the available motorbike in the list for renter to rent
     vector<Motorbike> motorbikes = motorbikeList();
     vector<Motorbike> sMotorbikes;
 
@@ -180,7 +181,7 @@ void Member::showSuitableBikes(){
     }
 }
 
-// vector<Request> Member::showRequest(){
+// vector<Request> Member::showRequest(){ //show request
 //     vector<Request> requestlist = requestList();
 //     vector<Request> requests;
 //     vector<Motorbike> motorbikes = motorbikeList();
