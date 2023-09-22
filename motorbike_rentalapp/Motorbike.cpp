@@ -57,7 +57,7 @@ string Motorbike::toString()
     return to_string(ownerID) + "," + bikeID + "," + city + "," + brand + "," + model + "," + color + "," + engine_size + "," + description + "," + to_string(credit) + "," + to_string(requiredScore) + "," + to_string(motorbike_rating_score) + "," + to_string(isRented);
 }
 
-string Motorbike::findbike(string ID){
+string Motorbike::findbike(string ID){ //function to find motorbike
     vector<Motorbike> motorlist = motorbikeList();
     for(int i = 0; i < motorlist.size(); i++){
         if(motorlist[i].bikeID == ID){
