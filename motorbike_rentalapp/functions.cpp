@@ -25,17 +25,20 @@ int generateId(vector<Member> memberList){
 };
 
 vector<Rating> renterRatingList(){
-    vector<Rating> renterRatingList = {};
+    vector<Rating> renterRatingList = {};    // Creating an empty vector of Rating objects.
 
     ifstream renterRating("renterRating.txt");
-    if(renterRating.is_open()){
+    if(renterRating.is_open()){    // Taking the data if the file is successfully opened.
         int customerID, ownerID, id, score;
         string cmt, myString, line;
 
+        // Read the file line by line.
         while(getline(renterRating, line)){
-            stringstream ss(line);
+            stringstream ss(line);    // Create a stringstream to parse the line.
+
+            // Parse the comma-separated values from the line and convert them to appropriate data types.
             getline(ss, myString, ',');
-            id = stoi(myString);
+            id = stoi(myString);    // Convert to double using stod.
             getline(ss, myString, ',');
             customerID = stoi(myString);
             getline(ss, myString, ',');
@@ -44,7 +47,7 @@ vector<Rating> renterRatingList(){
             score = stoi(myString);
             getline(ss, cmt);
 
-
+            // Create a new Rating object using the parsed data and add it to the renterRatingList vector.
             Rating newRating(id, customerID, ownerID, score, cmt);
             renterRatingList.push_back(newRating);
         }
@@ -56,18 +59,21 @@ vector<Rating> renterRatingList(){
 };
 
 vector<Member> memberList(){
-    vector<Member> memberList = {};
+    vector<Member> memberList = {};    // Create an empty vector of Member objects.
 
     ifstream members("users.txt");
-    if(members.is_open()){
+    if(members.is_open()){     // Taking the data if the file is successfully opened.
         int id;
         string name, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate, myString, line;
         double ratingScore, creditPoint;
 
+        // Read the file line by line.
         while(getline(members, line)){
-            stringstream ss(line);
+            stringstream ss(line);    // Create a stringstream to parse the line.
+
+            // Parse the comma-separated values from the line and convert them to appropriate data types.
             getline(ss, myString, ',');
-            id = stoi(myString);
+            id = stoi(myString);    // Convert to double using stod.
             getline(ss, name, ',');
             getline(ss, username, ',');
             getline(ss, password, ',');
@@ -77,10 +83,11 @@ vector<Member> memberList(){
             getline(ss, driverLicense, ',');
             getline(ss, expiredDate, ',');
             getline(ss, myString, ',');
-            ratingScore = stoi(myString);
+            ratingScore = stoi(myString);    
             getline(ss, myString, ',');
             creditPoint = stoi(myString);
 
+            // Create a new Member object using the parsed data and add it to the memberList vector.
             Member newMember(id, name, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate, ratingScore, creditPoint);
             memberList.push_back(newMember);
         }
@@ -92,19 +99,22 @@ vector<Member> memberList(){
 };
 
 vector<Motorbike> motorbikeList(){
-    vector<Motorbike> motorbikeList;
+    vector<Motorbike> motorbikeList;    // Create an empty vector of Motorbike objects.
 
     ifstream motor("motorbikes.txt");
-    if(motor.is_open()){
+    if(motor.is_open()){    // Taking the data if the file is successfully opened.
         int ownerID, temp;
         double requiredScore, motorbike_rating_score, credit;
         string bikeID, brand, model, color, city, description, engine_size, myString, line;
         bool isRented;
 
+        // Read the file line by line.
         while(getline(motor, line)){
-            stringstream ss(line);
+            stringstream ss(line);    // Create a stringstream to parse the line.
+
+            // Parse the comma-separated values from the line and convert them to appropriate data types.
             getline(ss, myString, ',');
-            ownerID = stoi(myString);
+            ownerID = stoi(myString);    // Convert to double using stod.
             getline(ss, bikeID, ',');
             getline(ss, city, ',');
             getline(ss, brand, ',');
@@ -125,6 +135,7 @@ vector<Motorbike> motorbikeList(){
                 isRented = true;
             }
 
+             // Create a new Motorbike object using the extracted data and add it to the motorbikeList vector.
             Motorbike newMotor(ownerID, bikeID, city, requiredScore, isRented, motorbike_rating_score, credit, brand, model, color, description, engine_size);
             motorbikeList.push_back(newMotor);
         }
@@ -136,16 +147,19 @@ vector<Motorbike> motorbikeList(){
 };
 
 vector<Request> requestList(){
-    vector<Request> requestList;
+    vector<Request> requestList;    // Create an empty vector of Request objects.
 
     ifstream request("request.txt");
-    if(request.is_open()){
+    if(request.is_open()){     // Taking the data if the file is successfully opened.
         int requestID, renterID, day_rent, temp;
         string bikeID, myString, line;
         bool isApprove;
 
+        // Read the file line by line.
         while(getline(request, line)){
-            stringstream ss(line);
+            stringstream ss(line);    // Create a stringstream to parse the line.
+
+            // Parse the comma-separated values from the line and convert them to appropriate data types.
             getline(ss, myString, ',');
             requestID = stoi(myString);
             getline(ss, myString, ',');
@@ -161,6 +175,7 @@ vector<Request> requestList(){
                 isApprove = true;
             }
 
+            // Create a new Request object using the extracted data and add it to the requestList vector.
             Request newRequest(requestID, renterID, bikeID, day_rent, isApprove);
             requestList.push_back(newRequest);
         }
