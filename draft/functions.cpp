@@ -134,33 +134,38 @@ vector<Motorbike> motorbikeList(){
     return motorbikeList;
 };
 
-// vector<Request> requestList(){
-//     vector<Request> requestList;
+vector<Request> requestList(){
+    vector<Request> requestList;
 
-//     ifstream rating("rating.txt");
-//     if(rating.is_open()){
-//         int customerID, ownerID, id, score;
-//         string cmt, myString, line;
+    ifstream request("request.txt");
+    if(request.is_open()){
+        int requestID, renterID, day_rent, temp;
+        string bikeID, myString, line;
+        bool isApprove;
 
-//         while(getline(rating, line)){
-//             stringstream ss(line);
-//             getline(ss, myString, ',');
-//             id = stoi(myString);
-//             getline(ss, myString, ',');
-//             customerID = stoi(myString);
-//             getline(ss, myString, ',');
-//             ownerID = stoi(myString);
-//             getline(ss, myString, ',');
-//             score = stoi(myString);
-//             getline(ss, cmt);
+        while(getline(request, line)){
+            stringstream ss(line);
+            getline(ss, myString, ',');
+            requestID = stoi(myString);
+            getline(ss, myString, ',');
+            renterID = stoi(myString);
+            getline(ss, bikeID, ',');
+            getline(ss, myString, ',');
+            day_rent = stoi(myString);
+            getline(ss, myString, ',');
+            temp = stoi(myString);
+            if (temp == 0){
+                isApprove = false;
+            } else {
+                isApprove = true;
+            }
 
+            Request newRequest(requestID, renterID, bikeID, day_rent, isApprove);
+            requestList.push_back(newRequest);
+        }
 
-//             Rating newRating(id, customerID, ownerID, score, cmt);
-//             ratingList.push_back(newRating);
-//         }
+        request.close();
+    }
 
-//         rating.close();
-//     }
-
-//     return requestList;
-// };
+    return requestList;
+};

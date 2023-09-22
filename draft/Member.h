@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "Rating.h"
+#include "Request.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ class Member {
         void registerCustomer();
         Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput);
         void showSuitableBikes();
+        vector<Request> showRequest();
+
 };
 
 #endif

@@ -9,6 +9,7 @@ using namespace std;
 #include "Member.h"
 #include "Rating.h"
 #include "Motorbike.h"
+#include "Request.h"
 #include "functions.h"
 
 void userScreen(Member member){
@@ -61,9 +62,17 @@ void userScreen(Member member){
         } else if (choice == 3) {
             member.showSuitableBikes();
         } else if (choice == 4) {
+            Request newRequest;
+
             member.showSuitableBikes();
+            newRequest.addNewRequest(member);
+
         } else if (choice == 5) {
-            member.showSuitableBikes();
+            for (Request request : member.showRequest()){
+                request.display();
+                cout<<"________________\n";
+            }
+
         } else if (choice == 6) {
             member.showSuitableBikes();
         } else if (choice == 7) {

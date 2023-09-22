@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "Member.h"
-#include "Motorbike.h"
 
 using namespace std;
 
@@ -17,12 +16,15 @@ class Request {
         bool isApproved;
     public:
         Request(int requestID, int renterID, string bike_rented_ID, int day_rented, bool isApproved);
-        
+        Request();
+        string toString();
+        string display();
+
         int getRenterID();
-        int getBikeID();
+        string getBikeID();
         bool getStatus();
 
-        void addNewRequest();
+        void addNewRequest(Member member);
         void approveRequest();
 };
 

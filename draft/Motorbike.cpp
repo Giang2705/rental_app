@@ -44,6 +44,10 @@ double Motorbike::getRequiredScore(){
     return this->requiredScore;
 }
 
+string Motorbike::getID(){
+    return this->bikeID;
+}
+
 bool Motorbike::isRent(){
     return this->isRented;
 }

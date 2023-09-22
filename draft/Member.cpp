@@ -4,6 +4,7 @@
 #include "Member.h"
 #include "Rating.h"
 #include "Motorbike.h"
+#include "Request.h"
 #include "functions.h"
 using namespace std;
 
@@ -177,4 +178,26 @@ void Member::showSuitableBikes(){
     if(sMotorbikes.size() == 0){
         cout<<"There is no bikes available! \n";
     }
+}
+
+vector<Request> Member::showRequest(){
+    vector<Request> requestlist = requestList();
+    vector<Request> requests;
+    vector<Motorbike> motorbikes = motorbikeList();
+
+    for (Motorbike motor : motorbikes){
+        if (motor.getOwnerID() == this->id){
+            for (Request request : requestlist){
+                if (request.getBikeID() == motor.getID()) {
+                    requests.push_back(request);
+                }
+            }
+        }
+    }
+
+    if(requests.size() == 0){
+        cout<<"There is no requests! \n";
+    }
+
+    return requests;
 }
