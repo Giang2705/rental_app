@@ -28,31 +28,31 @@ Motorbike::Motorbike(){
 
 }
 
-void Motorbike::setOwnerID(Member member){
+void Motorbike::setOwnerID(Member member){ //set memberID to ownerID
     this->ownerID = member.getID();
 }
 
-int Motorbike::getOwnerID(){
+int Motorbike::getOwnerID(){ //get ownerID
     return this->ownerID;
 }
 
-double Motorbike::getCredit(){
+double Motorbike::getCredit(){ //get credit point
     return this->credit;
 }
 
-double Motorbike::getRequiredScore(){
+double Motorbike::getRequiredScore(){ //get required score
     return this->requiredScore;
 }
 
-string Motorbike::getID(){
+string Motorbike::getID(){ //get the bikeID
     return this->bikeID;
 }
 
-bool Motorbike::isRent(){
+bool Motorbike::isRent(){ //boolean to indetify whether the motorbike is rented
     return this->isRented;
 }
 
-string Motorbike::toString()
+string Motorbike::toString() 
 {
     return to_string(ownerID) + "," + bikeID + "," + city + "," + brand + "," + model + "," + color + "," + engine_size + "," + description + "," + to_string(credit) + "," + to_string(requiredScore) + "," + to_string(motorbike_rating_score) + "," + to_string(isRented);
 }
@@ -67,13 +67,13 @@ string Motorbike::findbike(string ID){ //function to find motorbike
     return "";
 }
 
-void Motorbike::addbike(Member member){
+void Motorbike::addbike(Member member){ //function to add motorbike
     vector<Motorbike> motorlist = motorbikeList();
     string bikeID;
     cout << "Please enter license plate: ";
     cin >> bikeID;
 
-    string findbikeID = findbike(bikeID);
+    string findbikeID = findbike(bikeID); //find motorbike at first to distinguish whether the motorbike exist or not
     if (findbikeID != "") {
         cout << "Bike already exist" << endl;
     } else {
@@ -105,7 +105,7 @@ void Motorbike::addbike(Member member){
     }            
 }    
 
-void Motorbike::removebike(Motorbike motorbike){
+void Motorbike::removebike(Motorbike motorbike){ //function to remove motorbike
         ifstream motor("motorbikes.txt");
 
         if (motor.is_open()){
@@ -152,7 +152,7 @@ void Motorbike::removebike(Motorbike motorbike){
         rename("new.txt", "motorbikes.txt");
 }      
 
-void Motorbike::showinfo(){
+void Motorbike::showinfo(){ //show information of the motorbike
         cout<<"-------------------MOTORBIKE INFORMATION---------------------------\n";
         cout<<"Owner's ID: "<< this->ownerID << "\n";
         cout<<"Bike's ID: "<< this->bikeID << "\n";
@@ -168,7 +168,7 @@ void Motorbike::showinfo(){
         cout<<"_____________\n";
 }    
 
-void Motorbike::savebike(Motorbike newMotor, string filename){
+void Motorbike::savebike(Motorbike newMotor, string filename){ //save the motorbike to list
     ifstream file(filename);
     if (file.is_open()){
         ofstream file(filename, ios::app);
