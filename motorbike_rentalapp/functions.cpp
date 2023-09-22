@@ -9,14 +9,15 @@
 
 using namespace std;
 
+// Automatically generating ID
 int generateId(vector<Member> memberList){
-    int id;
+    int id;    // Creating a random number 
     vector<int> v(memberList.size());
     random_device rd;
     iota(v.begin(), v.end(), 1);
     for (auto i : v){
         if (memberList.size() == i) {
-            id = i+1;
+            id = i+1;    // Calculating order to ID
             break;
         }
     }
