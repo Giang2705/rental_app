@@ -3,9 +3,11 @@
 #include <string>
 #include "Member.h"
 #include "Rating.h"
+#include "Motorbike.h"
+#include "functions.h"
 using namespace std;
 
-Member::Member(int id, string name, string username, string password, string phoneNumber, string idType, string idNumber, string driverLicense, string expiredDate) {
+Member::Member(int id, string name, string username, string password, string phoneNumber, string idType, string idNumber, string driverLicense, string expiredDate, double ratingScore, double creditPoint) {
     this->id = id; 
     this->name = name; 
     this->username = username; 
@@ -14,7 +16,10 @@ Member::Member(int id, string name, string username, string password, string pho
     this->idType = idType;
     this->idNumber = idNumber;
     this->driverLicense = driverLicense;
-    this->expiredDate = expiredDate;}
+    this->expiredDate = expiredDate;
+    this->ratingScore = ratingScore;
+    this->creditPoint = creditPoint;
+};
 Member::Member(){};
 
 void Member::showInfo(){
@@ -22,7 +27,7 @@ void Member::showInfo(){
     cout<<"Member's name: "<<name<<"\n\n"; 
 }
 
-void Member::rating(Member owner){
+void Member::ratingRenter(Member renter){
     int score;
     string cmt;
     
@@ -32,8 +37,8 @@ void Member::rating(Member owner){
     cin.ignore();
     getline(cin, cmt);
 
-    Rating newRating(1, this->id, owner.id, score, cmt);
-    owner.userRatingList.push_back(newRating);
+    Rating newRating(1, this->id, renter.id, score, cmt);
+    renter.userRatingList.push_back(newRating);
 
     ifstream file("rating.txt");
     if (file.is_open()){
@@ -41,25 +46,12 @@ void Member::rating(Member owner){
         file << "\n" << newRating.getID() << "," << newRating.getCustomerID() << "," << newRating.getOwnerID() 
         << "," << newRating.getScore() << "," << newRating.getCmt();
     } else {
-        ofstream file("rating.txt", ios::app);
+        ofstream file("renterRating.txt", ios::app);
         file << newRating.getID() << "," << newRating.getCustomerID() << "," << newRating.getOwnerID() 
         << "," << newRating.getScore() << "," << newRating.getCmt();
     }
 
     file.close();
-}
-
-void Member::showRatingList(){
-    for (int i = 0; i<ratingList().size(); i++){
-        if(ratingList()[i].getOwnerID() == this->id){
-            this->userRatingList.push_back(ratingList()[i]);
-        }
-    }
-
-    for (int i = 0; i < this->userRatingList.size(); i++){
-        userRatingList[i].displayDetail();
-        cout<<"----------\n";
-    }
 }
 
 void Member::setScore(){
@@ -72,65 +64,117 @@ void Member::setScore(){
     this->ratingScore = (total/userRatingList.size());
 }
 
+int Member::getID(){
+    return this->id;
+}
+
 double Member::getScore(){
     return this->ratingScore;
 }
 
-string Member::getUsername() const {
-    return username;
+string Member::getName() {
+    return this->name;
+}
+
+string Member::getUsername() {
+    return this->username;
 }
 
 // Check if provided password matches the stored password
-bool Member::checkPassword(const std::string& passwordInput) const {
-    return passwordInput == this->password;
+string Member::getPassword() {
+    return this->password;
 }
 
 
-vector<Member> customerDatabase;    // This is a test database
-
 // Function to register a new customer
 void Member::registerCustomer() {
-    
-    int id = generateId();
+    vector<Member> members = memberList();
 
-    string name;
-    cout << "Enter your name: ";
+    int id = generateId(members);
+    double creditPoint = 20, ratingScore = 10;
+
+    cout<<"-------------------REGISTER--------------------------\n";
+
+    string fullname;
+    cout << "Enter your full name: ";
     cin.ignore();
-    getline(cin, name);
+    getline(cin, fullname);
     
+    string phoneNumber;
+    cout << "Enter your phone number: ";
+    getline(cin, phoneNumber);
+
+    string idType;
+    cout << "Enter your ID type (passport / ID): ";
+    getline(cin, idType);
+
+    string idNumber;
+    cout << "Enter your ID Number (passport / ID): ";
+    getline(cin, idNumber);
+
+    string driverLicense;
+    cout << "Enter your driver license: ";
+    getline(cin, driverLicense);
+
+    string expiredDate;
+    cout << "Enter the expired date of your driver license: ";
+    getline(cin, expiredDate);
+
     string username;
     cout << "Enter your username: ";
-    cin >> username;
+    getline(cin, username);
+    // Checking existing account
+    for (Member& member : members){
+        while (member.getUsername() == username)
+        {
+            cout << "The username has existed, enter another username: ";
+            getline(cin, username);
+        }
+    }
 
-    string password;
     cout << "Enter your password: ";
-    cin >> password;
+    getline(cin, password);
 
     ifstream file("users.txt");
     if (file.is_open()){
         ofstream file("users.txt", ios::app);
-        file << "\n" << name << "," << username << ","<< password;
+        file << "\n" << id << "," << fullname << "," << username << "," << password << "," << phoneNumber << "," << idType << "," << idNumber << "," << driverLicense << "," << expiredDate << "," << ratingScore << "," << creditPoint;
     } else {
-        ofstream file("users.txt");
-        file << name << "," << username << ","<< password;
+        ofstream file("users.txt", ios::app);
+        file << id << "," << fullname << "," << username << "," << password << "," << phoneNumber << "," << idType << "," << idNumber << "," << driverLicense << "," << expiredDate << "," << ratingScore << "," << creditPoint;
     }
     file.close();
 
-    // // Create a new Member object and add it to the customer database
-    // Member newCustomer(id, name, {}, username, password);
-    // customerDatabase.push_back(newCustomer);
+    cout << "Registration successful!!!! " << "\n" << fullname << "\nYour ID : " << id <<
+    "\nYour credit point: "<< creditPoint << "\nYour rating score: "<< ratingScore << endl;
 
-    cout << "Registration successful. Your ID is: " << id << endl;
+    cout << "-----------------------------------------------------\n";
 }
 
-Member* loginCustomer(const std::string& usernameInput, const std::string& passwordInput) {
-    for (Member& customer : customerDatabase) {
-        if (customer.getUsername() == usernameInput && customer.checkPassword(passwordInput)) {
-            cout << "Login successful. Welcome, " << customer.getUsername() << "!" << endl;
-            return &customer;
-            break;
+Member *Member::loginCustomer(const string& username, const string& password)
+{
+    vector<Member> members = memberList();
+
+    for (Member& member : members) {
+        if (member.getUsername() == username && member.getPassword() == password) {
+            return &member;
         }
     }
-    cout << "Login failed. Member ID not found." << endl;
     return nullptr;
+}
+
+void Member::showSuitableBikes(){
+    vector<Motorbike> motorbikes = motorbikeList();
+    vector<Motorbike> sMotorbikes;
+
+    for (Motorbike motor: motorbikes){
+        if (motor.getOwnerID() != this->id && motor.getCredit() <= this->creditPoint && motor.getRequiredScore() <= this->ratingScore && !motor.isRent()){
+            motor.showinfo();
+            sMotorbikes.push_back(motor);
+        }
+    }
+
+    if(sMotorbikes.size() == 0){
+        cout<<"There is no bikes available! \n";
+    }
 }

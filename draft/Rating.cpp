@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Rating.h"
 #include "Member.h"
+
 using namespace std;
 
 Rating::Rating(int id, int customer, int owner, int score, string cmt) {this->id = id; this->customerID = customer; this->ownerID = owner ;this->score = score, this->cmt = cmt;}

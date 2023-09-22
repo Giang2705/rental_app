@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iostream>
+#include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
@@ -8,38 +8,118 @@ using namespace std;
 
 #include "Member.h"
 #include "Rating.h"
+#include "Motorbike.h"
 #include "functions.h"
 
-int main(){
-    Member mem2(2, "member 1", "username1", "123455", "0909123456", "passport", "C0213321", "B12334", "02/26");
-    Member mem4(4, "member 2", "username2", "4657687", "0909123456", "passport", "C0213321", "B12334", "02/26");
+void userScreen(Member member){
+    int choice;
 
-    mem2.rating(mem4);
-    mem4.rating(mem2);
+    cout<<"------------------Hello "<< member.getName() << "-----------------------\n";
+    while (true) {
+    cout << "--------------MEMBER MENU--------------\n";
+    cout << "Choose an option: " << endl;
+    cout << "1. Add a motorbike to available rental list" << endl;
+    cout << "2. View and modify own motorbike" << endl;
+    cout << "3. View all suitable bike(s)" << endl;
+    cout << "4. Request to rent a motorbike" << endl;
+    cout << "5. View all requests to all own motorbike" << endl;
+    cout << "6. View rented motorbike" << endl;
+    cout << "7. Log out" << endl;
+    cout << "---------------------------------------\n";
+    cout << "Enter choice: ";
+    cin >> choice;
 
-    mem2.rating(mem4);
-    mem4.rating(mem2);
+        if (choice == 1) {
+            Motorbike newMotor;
+            newMotor.addbike(member);
+        } else if (choice == 2) {
+            vector<Motorbike> motorbikes = motorbikeList();
+            bool isFound = false;
 
-    mem2.rating(mem4);
-    mem4.rating(mem2);
+            for (Motorbike motor: motorbikes) {
+                if (motor.getOwnerID() == member.getID()){
+                    motor.showinfo();
 
-    for (int i = 0; i<ratingList().size(); i++){
-            ratingList()[i].displayDetail();
-            cout<<"----------\n";
+                    string choice;
+                    cout<<"Do you want to delete this bike? (y/n): ";
+                    cin.ignore();
+                    getline(cin,choice);
+
+                    if(choice == "y"){
+                        motor.removebike(motor);
+                    }
+
+                    isFound = true;
+                    break;
+                }
+            }
+
+            if (!isFound){
+                cout<<"There is no motorbike found!\n";
+            }
+
+        } else if (choice == 3) {
+            member.showSuitableBikes();
+        } else if (choice == 4) {
+            member.showSuitableBikes();
+        } else if (choice == 5) {
+            member.showSuitableBikes();
+        } else if (choice == 6) {
+            member.showSuitableBikes();
+        } else if (choice == 7) {
+            break;
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
     }
+}
 
-    cout<<"Rating list of mem 2: \n";
-    mem2.showRatingList();
-    cout<<"-------------------\n";
+void adminScreen(){
 
-    cout<<"Rating list of mem 4: \n";
-    mem4.showRatingList();
+}
 
-    mem2.setScore();
-    mem4.setScore();
+int main(){
+    int choice;
+    while (true) {
+        cout << "--------MOTORBIKE RENTAL APP-----------\n";
+        cout << "Choose an option: " << endl;
+        cout << "1. Register" << endl;
+        cout << "2. Login" << endl;
+        cout << "3. Exit" << endl;
+        cout << "---------------------------------------\n";
+        cout << "Enter choice: ";
+        cin >> choice;
 
-    cout<<"mem2's score: "<<mem2.getScore()<<"\n";
-    cout<<"mem4's score: "<<mem4.getScore();
-    
+        if (choice == 1) {
+            Member newMember;
+            newMember.registerCustomer();
+        } else if (choice == 2) {
+            string username, password;
+
+            cout <<"----------------LOGIN---------------\n";
+            cout << "Enter your username: ";
+            cin >> username;
+            cout << "Enter your password: ";
+            cin >> password;
+            cout<<"-------------------------------------\n";
+            
+            Member member;
+            Member* hasLogin = member.loginCustomer(username, password);
+            if (hasLogin == nullptr){
+                cout << "Login failed." << endl;
+            }else{
+                for (Member member : memberList()){
+                    if (member.getUsername() == username){
+                        userScreen(member);
+                        break;
+                    }
+                }
+            }
+        } else if (choice == 3) {
+            break;
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    }
     return 0;
 }
