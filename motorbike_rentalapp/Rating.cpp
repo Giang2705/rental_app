@@ -4,9 +4,10 @@
 
 using namespace std;
 
+//Parameterized constructor
 Rating::Rating(int id, int customer, int owner, int score, string cmt) {this->id = id; this->customerID = customer; this->ownerID = owner ;this->score = score, this->cmt = cmt;}
 
-void Rating::displayDetail(){
+void Rating::displayDetail(){ //display the rating of each member
     cout<<"Owner's ID: "<<ownerID<<"\n";
     cout<<"Customer's ID: "<<customerID<<"\n";
     cout<<"Rating ID: "<< id <<"\n";
