@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//Parameterized constructor
 Motorbike::Motorbike(int ownerID, string bikeID, string city, double requiredScore, bool isRented, double motorbike_rating_score, double credit, string brand, string model, string color, string description, string engine_size){
     this->ownerID = ownerID;
     this->bikeID = bikeID;
@@ -24,9 +25,9 @@ Motorbike::Motorbike(int ownerID, string bikeID, string city, double requiredSco
     this->engine_size = engine_size;
 }
 
-Motorbike::Motorbike(){
+Motorbike::Motorbike(){ //Default Constructor with no parameter
 
-}
+} 
 
 void Motorbike::setOwnerID(Member member){ //set memberID to ownerID
     this->ownerID = member.getID();
