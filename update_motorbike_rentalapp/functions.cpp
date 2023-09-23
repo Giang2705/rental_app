@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//auto generate id
 int generateId(vector<Member> memberList){
     int id;
     vector<int> v(memberList.size());
@@ -23,6 +24,7 @@ int generateId(vector<Member> memberList){
     return id;
 };
 
+// return rating list
 vector<Rating> renterRatingList(){
     vector<Rating> renterRatingList = {};
 
@@ -54,6 +56,8 @@ vector<Rating> renterRatingList(){
     return renterRatingList;
 };
 
+
+//return bike rating list
 vector<BikeRating> bikeRatingList(){
     vector<BikeRating> bikeRatingList = {};
 
@@ -83,6 +87,8 @@ vector<BikeRating> bikeRatingList(){
     return bikeRatingList;
 };
 
+
+//return member list
 vector<Member> memberList(){
     vector<Member> memberList = {};
 
@@ -127,6 +133,7 @@ vector<Member> memberList(){
     return memberList;
 };
 
+//return motorbike list
 vector<Motorbike> motorbikeList(){
     vector<Motorbike> motorbikeList;
 
@@ -171,6 +178,8 @@ vector<Motorbike> motorbikeList(){
     return motorbikeList;
 };
 
+
+//return request list
 vector<Request> requestList(){
     vector<Request> requestList;
 
