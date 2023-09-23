@@ -6,6 +6,7 @@
 #include "functions.h"
 using namespace std;
 
+//constructors
 Member::Member(int id, string name, string username, string password, string phoneNumber, string idType, string idNumber, string driverLicense, string expiredDate, double ratingScore, double creditPoint, bool isAdmin) {
     this->id = id; 
     this->name = name; 
@@ -22,6 +23,7 @@ Member::Member(int id, string name, string username, string password, string pho
 };
 Member::Member(){};
 
+//display user's information
 void Member::showInfo(){
     cout<<"Member Id: "<< id <<"\n";
     cout<<"Member's name: "<<name<<"\n"; 
@@ -35,6 +37,7 @@ void Member::showInfo(){
     cout<<"-------------------------\n";
 }
 
+//display own rating list
 void Member::showOwnRatingList(){
     vector<Rating> ratings = renterRatingList();
     vector<Rating> ownRatings;
@@ -57,6 +60,7 @@ void Member::showOwnRatingList(){
     }
 }
 
+// display own bike rating list
 void Member::showBikeRatingList(){
     vector<BikeRating> bikeRatings = bikeRatingList();
     vector<BikeRating> ownBikeRatings;
@@ -107,6 +111,7 @@ void Member::showBikeRatingList(){
     }
 }
 
+// Rate renter
 void Member::ratingRenter(Member renter){
     vector<Rating> ratings = renterRatingList();
 
@@ -135,6 +140,8 @@ void Member::ratingRenter(Member renter){
     file.close();
 }
 
+
+// Rate bike
 void Member::ratingBike(string bikeID){
     vector<Motorbike> motorbikes = motorbikeList();
     vector<BikeRating> bikeRatings = bikeRatingList();
@@ -172,6 +179,8 @@ void Member::ratingBike(string bikeID){
     }
 }
 
+
+//setter & getter
 void Member::setScore(){
     double total = 0;
 
@@ -273,6 +282,7 @@ void Member::registerCustomer() {
     cout << "-----------------------------------------------------\n";
 }
 
+// login
 Member *Member::loginCustomer(const string& username, const string& password)
 {
     vector<Member> members = memberList();
@@ -285,6 +295,8 @@ Member *Member::loginCustomer(const string& username, const string& password)
     return nullptr;
 }
 
+
+//list suitable bikes
 void Member::showSuitableBikes(){
     vector<Motorbike> motorbikes = motorbikeList();
     vector<Motorbike> sMotorbikes;
@@ -301,6 +313,8 @@ void Member::showSuitableBikes(){
     }
 }
 
+
+// list of requests
 void Member::showRequest(){
     vector<Request> requestlist = requestList();
     vector<Request> requests;
@@ -336,6 +350,8 @@ void Member::showRequest(){
     }
 }
 
+
+// approving request
 void Member::approveRequest(int inputID){
     ifstream request("request.txt");
 
@@ -395,6 +411,8 @@ void Member::approveRequest(int inputID){
     rejectRequest();
 }
 
+
+//reject request
 void Member::rejectRequest(){
     vector<Request> requestlist = requestList();
     vector<Request> rejectedRequestList;
@@ -462,6 +480,8 @@ void Member::rejectRequest(){
 
 }
 
+
+//list of rented bike
 void Member::getRentedBike(){
     vector<Request> requests = requestList();
     vector<Motorbike> motorbikes = motorbikeList();
