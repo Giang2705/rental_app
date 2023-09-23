@@ -7,12 +7,15 @@
 
 using namespace std;
 
+//declare class BikeRating
 class BikeRating {
     private:
+        // attributes
         int customerID;
         double score;
         string bikeID, cmt;
     public:
+        // declare functions
         BikeRating(int customerID, string bikeID, double score, string cmt);
         BikeRating();
 
