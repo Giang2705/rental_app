@@ -1,0 +1,6 @@
+1,admin,admin,123,0909123456,id,123456,b1123,02/26,10,20,1
+2,ha giang,giang,123,0909123456,id,123456,b1123,02/26,10,20,0
+3,nguyen thi ha giang,giang1,123,0949822705,passport,c1234,b1234,02/26,10,20,0
+4,nguyen ha giang,giang2,123,0949822705,passport,c1234,b1234,02/26,10,20,0
+5,ha giang nguyen,giang3,123,0949822705,passport,c1234,b1234,02/26,10,20,0
+6,Nguyen Thi Ha Giang,giangnguyen,123,0949456789,ID,079199123456,B123,02/26,10,20
