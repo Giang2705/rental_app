@@ -6,6 +6,7 @@
 #include "Motorbike.h"
 #include "Member.h"
 #include "functions.h"
+#include <math.h>
 
 using namespace std;
 
