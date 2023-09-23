@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <sstream>
 #include "Motorbike.h"
 #include "Member.h"
@@ -72,19 +73,39 @@ string Motorbike::findbike(string ID){
     return "";
 }
 
-void Motorbike::addbike(Member member){
+void Motorbike::addbike(Member member)
+{
     vector<Motorbike> motorlist = motorbikeList();
     string bikeID;
+    string a = "Ha Noi";
+    string b = "Sai Gon";
+    int index = 1;
     cout << "Please enter license plate: ";
     cin >> bikeID;
+    cin.ignore(1, '\n');
 
     string findbikeID = findbike(bikeID);
-    if (findbikeID != "") {
+    if (findbikeID != "")
+    {
         cout << "Bike already exist" << endl;
-    } else {
-        cout << "Enter city: ";
-        cin.ignore();
-        getline(cin, city);
+    }
+    else
+    {
+        while (index != 0)
+        {
+            cout << "Enter city: ";
+            getline(cin, city);
+
+            if (city.compare(a) == 0 || city.compare(b) == 0)
+            {
+                break;
+            }
+            else if (city.compare(a) != 0 || city.compare(b) != 0)
+            {
+                cout << "The application is only available to users in Ha Noi and Sai Gon!" << endl;
+            }
+        }
+
         cout << "Please enter the brand of bike: ";
         getline(cin, brand);
         cout << "Please enter model of bike: ";
@@ -95,20 +116,34 @@ void Motorbike::addbike(Member member){
         getline(cin, engine_size);
         cout << "Please enter description: ";
         getline(cin, description);
+
         cout << "Please enter credit of bike: ";
         cin >> credit;
-        cout << "Enter required score: ";
-        cin >> requiredScore;        
 
-        Motorbike newMotor(member.getID(), bikeID, city, requiredScore, false, 0, credit, brand, model, color, description, engine_size);
-        newMotor.setOwnerID(member);
+        while (index != 0)
+        {
+            cout << "Enter required score: ";
+            cin >> requiredScore;
+            if (requiredScore <= 10 && requiredScore >= 0)
+            {
+                break;
+            }
+            else
+            {
+                cout << "The required score must be from 0 to 10!" << endl;
+            }
+        }
+    }
 
-        savebike(newMotor, "motorbikes.txt");
+    Motorbike newMotor(member.getID(), bikeID, city, requiredScore, false, 0, credit, brand, model, color, description, engine_size);
+    newMotor.setOwnerID(member);
 
-        motorlist.push_back(newMotor);
-        cout << "Added successfully" << endl;
-    }            
-}    
+    savebike(newMotor, "motorbikes.txt");
+
+    motorlist.push_back(newMotor);
+    cout << "Added successfully" << endl;
+}
+ 
 
 void Motorbike::removebike(Motorbike motorbike){
         ifstream motor("motorbikes.txt");
