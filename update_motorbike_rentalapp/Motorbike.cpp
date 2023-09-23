@@ -10,7 +10,7 @@
 #include <math.h>
 
 using namespace std;
-
+// default constructor
 Motorbike::Motorbike(int ownerID, string bikeID, string city, double requiredScore, bool isRented, double motorbike_rating_score, double credit, string brand, string model, string color, string description, string engine_size){
     this->ownerID = ownerID;
     this->bikeID = bikeID;
@@ -25,11 +25,11 @@ Motorbike::Motorbike(int ownerID, string bikeID, string city, double requiredSco
     this->description = description;
     this->engine_size = engine_size;
 }
-
+// default constructor
 Motorbike::Motorbike(){
 
 }
-
+// structures:
 void Motorbike::setOwnerID(Member member){
     this->ownerID = member.getID();
 }
@@ -63,6 +63,7 @@ string Motorbike::toString()
     return to_string(ownerID) + "," + bikeID + "," + city + "," + brand + "," + model + "," + color + "," + engine_size + "," + description + "," + to_string(round(credit)) + "," + to_string(round(requiredScore)) + "," + to_string(round(motorbike_rating_score)) + "," + to_string(isRented);
 }
 
+// find motorbike and indicate if it is existed
 string Motorbike::findbike(string ID){
     vector<Motorbike> motorlist = motorbikeList();
     for(int i = 0; i < motorlist.size(); i++){
@@ -73,6 +74,7 @@ string Motorbike::findbike(string ID){
     return "";
 }
 
+// add motorbike to user account where existed motorbike will not be valid to be added
 void Motorbike::addbike(Member member)
 {
     vector<Motorbike> motorlist = motorbikeList();
@@ -84,7 +86,7 @@ void Motorbike::addbike(Member member)
     cin >> bikeID;
     cin.ignore(1, '\n');
 
-    string findbikeID = findbike(bikeID);
+    string findbikeID = findbike(bikeID);  // used the findbike function to know if the bike is already existed
     if (findbikeID != "")
     {
         cout << "Bike already exist" << endl;
@@ -96,7 +98,7 @@ void Motorbike::addbike(Member member)
             cout << "Enter city: ";
             getline(cin, city);
 
-            if (city.compare(a) == 0 || city.compare(b) == 0)
+            if (city.compare(a) == 0 || city.compare(b) == 0) //the application is only available in Sai Gon and Ha Noi so others city will not be allow
             {
                 break;
             }
@@ -124,7 +126,7 @@ void Motorbike::addbike(Member member)
         {
             cout << "Enter required score: ";
             cin >> requiredScore;
-            if (requiredScore <= 10 && requiredScore >= 0)
+            if (requiredScore <= 10 && requiredScore >= 0) // rating score must be a number from 1 to 10
             {
                 break;
             }
@@ -138,17 +140,17 @@ void Motorbike::addbike(Member member)
     Motorbike newMotor(member.getID(), bikeID, city, requiredScore, false, 0, credit, brand, model, color, description, engine_size);
     newMotor.setOwnerID(member);
 
-    savebike(newMotor, "motorbikes.txt");
+    savebike(newMotor, "motorbikes.txt"); //save the new bike into the system file
 
     motorlist.push_back(newMotor);
     cout << "Added successfully" << endl;
 }
  
-
+// remove a bike function
 void Motorbike::removebike(Motorbike motorbike){
         ifstream motor("motorbikes.txt");
 
-        if (motor.is_open()){
+        if (motor.is_open()){ // open the motorbike file
             int temp;
             string myString, line;
 
@@ -192,6 +194,7 @@ void Motorbike::removebike(Motorbike motorbike){
         rename("new.txt", "motorbikes.txt");
 }      
 
+// presenting information of the bike
 void Motorbike::showinfo(){
         cout<<"Owner's ID: "<< this->ownerID << "\n";
         cout<<"Bike's ID: "<< this->bikeID << "\n";
@@ -207,6 +210,7 @@ void Motorbike::showinfo(){
         cout<<"_____________\n";
 }    
 
+// function to save new bike into the system file
 void Motorbike::savebike(Motorbike newMotor, string filename){
     ifstream file(filename);
     if (file.is_open()){
