@@ -6,6 +6,7 @@ using namespace std;
 
 Rating::Rating(int id, int owner, int customer, int score, string cmt) {this->id = id; this->ownerID = owner; this->customerID = customer ;this->score = score, this->cmt = cmt;}
 
+//function to present the ratings
 void Rating::displayDetail(){
     cout<<"Owner's ID: "<<ownerID<<"\n";
     cout<<"Customer's ID: "<<customerID<<"\n";
@@ -14,6 +15,7 @@ void Rating::displayDetail(){
     cout<<"Rating's comment: "<<cmt<<"\n\n";
 };
 
+//structures
 int Rating::getOwnerID(){
     return this->ownerID;
 };
