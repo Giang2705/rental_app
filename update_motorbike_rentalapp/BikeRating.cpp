@@ -8,6 +8,7 @@ using namespace std;
 BikeRating::BikeRating(int customer, string bikeID, double score, string cmt) {this->customerID = customer; this->bikeID = bikeID ;this->score = score, this->cmt = cmt;}
 BikeRating::BikeRating(){}
 
+// display bike rating detail
 void BikeRating::displayDetail(){
     cout<<"Customer's ID: "<<customerID<<"\n";
     cout<<"Bike ID: "<< bikeID <<"\n";
@@ -16,6 +17,7 @@ void BikeRating::displayDetail(){
 };
 
 
+// constructors
 int BikeRating::getCustomerID(){
     return this->customerID;
 };
