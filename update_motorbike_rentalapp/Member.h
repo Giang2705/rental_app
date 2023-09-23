@@ -9,17 +9,22 @@
 
 using namespace std;
 
+//declare class Member
 class Member {
     private:
+    //attributes
         int id;
         double ratingScore, creditPoint;
         string name, username, password, phoneNumber, idType, idNumber, driverLicense, expiredDate;
         vector<Rating> userRatingList;
         bool isAdmin;
     public:
+
+        // constructors
         Member(int id, string name, string username, string password, string phoneNumber, string idType, string idNumber, string driverLicense, string expiredDate, double ratingScore, double creditPoint, bool isAdmin);
         Member();
 
+        //setter getter and functions
         int getID();
         string getName();
         string getUsername();
