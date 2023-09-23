@@ -10,6 +10,7 @@
 
 using namespace std;
 
+//constructor
 Request::Request(int ID, int renterID, string bikeID, int day_rent, bool isApproved, bool isRejected) {
         this->requestID = ID;
         this->renterID = renterID;
@@ -23,6 +24,7 @@ Request::Request(){
 
 }
 
+// function display to string
 string Request::toString()
 {
     return to_string(requestID) + "," + to_string(renterID) + "," + bike_rented_ID + "," + to_string(day_rented) + "," + to_string(isApproved) + "," + to_string(isRejected);
@@ -33,6 +35,7 @@ string Request::display()
     return "Request ID: " + to_string(requestID) + "\nRenter: " + to_string(renterID) + "\nBike ID: " + bike_rented_ID + "\nDay(s) rent: " + to_string(day_rented) + "\nStatus: " + to_string(isApproved) + "\n----------------------------------\n\n";
 }
 
+//getter setter
 int Request::getRenterID() {
     return this->renterID;
 }
@@ -61,6 +64,8 @@ void Request::setRejected(bool isRejected){
     this->isRejected = isRejected;
 }
 
+
+//create request
 void Request::addNewRequest(Member member){
     vector<Request> requestlist = requestList();
     vector<Motorbike> availableMotor;
